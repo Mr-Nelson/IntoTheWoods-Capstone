@@ -18,6 +18,8 @@ namespace InTheWoods.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<SubComment> SubComments { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,17 +32,16 @@ namespace InTheWoods.Data
 
                 modelBuilder.Entity<Comment>();
 
+                modelBuilder.Entity<Event>();
+
+                modelBuilder.Entity<Document>();
+
                 modelBuilder.Entity<SubComment>()
-                    .HasKey(bc => new { bc.Id, bc.CommentId, bc.UserId, bc.AdminId });
+                    .HasKey(bc => new { bc.Id, bc.CommentId });
                 modelBuilder.Entity<SubComment>()
                     .HasOne(bc => bc.Comment)
                     .WithMany(b => b.SubComments)
                     .HasForeignKey(bc => bc.CommentId);
-
-
-                modelBuilder.Entity<Event>();
-
-
             }
         }
     }

@@ -4,14 +4,16 @@ using InTheWoods.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InTheWoods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210825190255_RecreateDatabase")]
+    partial class RecreateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,61 +107,6 @@ namespace InTheWoods.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("InTheWoods.Models.Department", b =>
-                {
-                    b.Property<int>("DepartmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Company")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Hours")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ManagerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("DepartmentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("InTheWoods.Models.Document", b =>
-                {
-                    b.Property<int>("DocumentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DocumentDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("DocumentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Documents");
-                });
-
             modelBuilder.Entity("InTheWoods.Models.Event", b =>
                 {
                     b.Property<int>("EventId")
@@ -167,8 +114,8 @@ namespace InTheWoods.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("EventDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTimeOffset>("EventDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("EventLocation")
                         .HasColumnType("nvarchar(max)");
@@ -317,15 +264,15 @@ namespace InTheWoods.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dc865815-f561-4e39-9cd2-6786e23b4447",
-                            ConcurrencyStamp = "53e40557-6a16-4dcc-a0e6-c49b0061a804",
+                            Id = "c73daaf4-bd12-414b-9038-b72b765eab66",
+                            ConcurrencyStamp = "a82cfffd-ee23-411c-aa58-bb89712b5320",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "e3c6d9f0-8a28-46c9-adc4-fd087d5e640a",
-                            ConcurrencyStamp = "105fbdaa-be17-4b75-9606-ca9dc28296f0",
+                            Id = "9fa228f5-4075-4aab-aec9-a9c35e2ceeb5",
+                            ConcurrencyStamp = "21a53bf2-5c14-437a-a054-46891551a9e1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -446,24 +393,6 @@ namespace InTheWoods.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Admin");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("InTheWoods.Models.Department", b =>
-                {
-                    b.HasOne("InTheWoods.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("InTheWoods.Models.Document", b =>
-                {
-                    b.HasOne("InTheWoods.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

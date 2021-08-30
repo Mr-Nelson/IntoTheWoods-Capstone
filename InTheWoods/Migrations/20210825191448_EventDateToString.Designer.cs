@@ -4,14 +4,16 @@ using InTheWoods.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InTheWoods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210825191448_EventDateToString")]
+    partial class EventDateToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,61 +105,6 @@ namespace InTheWoods.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("InTheWoods.Models.Department", b =>
-                {
-                    b.Property<int>("DepartmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Company")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Hours")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ManagerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("DepartmentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("InTheWoods.Models.Document", b =>
-                {
-                    b.Property<int>("DocumentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DocumentDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("DocumentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("InTheWoods.Models.Event", b =>
@@ -317,15 +264,15 @@ namespace InTheWoods.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dc865815-f561-4e39-9cd2-6786e23b4447",
-                            ConcurrencyStamp = "53e40557-6a16-4dcc-a0e6-c49b0061a804",
+                            Id = "70df029a-1ee1-4263-8986-a0dc09f07f3e",
+                            ConcurrencyStamp = "089d4553-34ad-4331-b2f4-15e434f85464",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "e3c6d9f0-8a28-46c9-adc4-fd087d5e640a",
-                            ConcurrencyStamp = "105fbdaa-be17-4b75-9606-ca9dc28296f0",
+                            Id = "69917067-a2b9-487b-9967-a828d07ab2eb",
+                            ConcurrencyStamp = "93f8cb86-e052-4a84-93ff-f3c5907d9c04",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -446,24 +393,6 @@ namespace InTheWoods.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Admin");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("InTheWoods.Models.Department", b =>
-                {
-                    b.HasOne("InTheWoods.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("InTheWoods.Models.Document", b =>
-                {
-                    b.HasOne("InTheWoods.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

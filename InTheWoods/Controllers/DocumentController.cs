@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace InTheWoods.Controllers
 {
-    [Route("api/event")]
+    [Route("api/document")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class DocumentController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public EventController(ApplicationDbContext context)
+        public DocumentController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpPost, Authorize]
-        public IActionResult Post([FromBody] Event value)
+        public IActionResult Post([FromBody] Document value)
         {
             //try
             //{
@@ -30,7 +30,7 @@ namespace InTheWoods.Controllers
             value.UserId = userId;
             try
             {
-                _context.Events.Add(value);
+                _context.Documents.Add(value);
                 _context.SaveChanges();
                 return StatusCode(201, value);
             }
@@ -57,7 +57,7 @@ namespace InTheWoods.Controllers
         }
 
         [HttpPut, Authorize]
-        public IActionResult Put([FromBody] Event value)
+        public IActionResult Put([FromBody] Document value)
         {
             //try
             //{
@@ -65,7 +65,7 @@ namespace InTheWoods.Controllers
             value.UserId = userId;
             try
             {
-                _context.Events.Add(value);
+                _context.Documents.Add(value);
                 _context.SaveChanges();
                 return StatusCode(201, value);
             }
@@ -92,25 +92,25 @@ namespace InTheWoods.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllEvents()
+        public IActionResult GetAllDocuments()
         {
-            var events = _context.Events;
-            if (events == null)
+            var documents = _context.Documents;
+            if (documents == null)
             {
                 return NotFound();
             }
-            return Ok(events);
+            return Ok(documents);
         }
 
-        [HttpGet("{eventId}")]
-        public IActionResult GetEventById(int EventId)
+        [HttpGet("{documentId}")]
+        public IActionResult GetDocumentById(int DocumentId)
         {
-            var events = _context.Events.Where(e => e.EventId == EventId);
-            if (events == null)
+            var documents = _context.Documents.Where(e => e.DocumentId == DocumentId);
+            if (documents == null)
             {
                 return NotFound();
             }
-            return Ok(events);
+            return Ok(documents);
         }
     }
 }

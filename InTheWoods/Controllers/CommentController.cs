@@ -58,7 +58,7 @@ namespace InTheWoods.Controllers
         public IActionResult GetCommentById(int commentId)
         {
             var comments = _context.Comments.Where(c => c.Id == commentId).Include(c => c.User).
-                 Select(c => new { commentId = c.Id, userId = c.UserId, userComment = c.UserComment, userName = c.User.UserName });
+                 Select(c => new { commentId = c.Id, userId = c.UserId, userComment = c.UserComment, userName = c.User.UserName});
             if (comments == null)
             {
                 return NotFound();

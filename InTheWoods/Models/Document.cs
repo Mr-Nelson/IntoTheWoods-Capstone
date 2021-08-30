@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace InTheWoods.Models
 {
-    public class Event
+    public class Document
     {
         [Key]
-        public int EventId { get; set; }
+        public int DocumentId { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
         public User User { get; set; }
-        public string EventDate { get; set; }
-        public string EventName { get; set; }
-        public string EventLocation { get; set; }
+        public string DocumentName { get; set; }
+        public string DocumentDescription { get; set; }
 
     }
 }

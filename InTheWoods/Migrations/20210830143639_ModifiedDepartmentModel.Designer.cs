@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InTheWoods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210824204446_SubcommentTableUpdate")]
-    partial class SubcommentTableUpdate
+    [Migration("20210830143639_ModifiedDepartmentModel")]
+    partial class ModifiedDepartmentModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,6 +107,61 @@ namespace InTheWoods.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("InTheWoods.Models.Department", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hours")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManagerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DepartmentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("InTheWoods.Models.Document", b =>
+                {
+                    b.Property<int>("DocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DocumentDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DocumentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Documents");
+                });
+
             modelBuilder.Entity("InTheWoods.Models.Event", b =>
                 {
                     b.Property<int>("EventId")
@@ -141,16 +196,16 @@ namespace InTheWoods.Migrations
                     b.Property<int>("CommentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("AdminId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AdminId")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserSubComment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id", "CommentId", "UserId", "AdminId");
+                    b.HasKey("Id", "CommentId");
 
                     b.HasIndex("AdminId");
 
@@ -264,15 +319,15 @@ namespace InTheWoods.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "32d84c8b-55c6-4f79-a650-3d035561a991",
-                            ConcurrencyStamp = "3281f525-400f-4f4a-ae78-ae98aabe2f78",
+                            Id = "dc865815-f561-4e39-9cd2-6786e23b4447",
+                            ConcurrencyStamp = "53e40557-6a16-4dcc-a0e6-c49b0061a804",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "483b1d92-578e-4bac-8b4f-07e532ddadb1",
-                            ConcurrencyStamp = "beb8180d-9104-4275-adb5-2a5d667ebd5a",
+                            Id = "e3c6d9f0-8a28-46c9-adc4-fd087d5e640a",
+                            ConcurrencyStamp = "105fbdaa-be17-4b75-9606-ca9dc28296f0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -397,6 +452,24 @@ namespace InTheWoods.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("InTheWoods.Models.Department", b =>
+                {
+                    b.HasOne("InTheWoods.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("InTheWoods.Models.Document", b =>
+                {
+                    b.HasOne("InTheWoods.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("InTheWoods.Models.Event", b =>
                 {
                     b.HasOne("InTheWoods.Models.User", "User")
@@ -410,9 +483,7 @@ namespace InTheWoods.Migrations
                 {
                     b.HasOne("InTheWoods.Models.Admin", "Admin")
                         .WithMany("SubComments")
-                        .HasForeignKey("AdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AdminId");
 
                     b.HasOne("InTheWoods.Models.Comment", "Comment")
                         .WithMany("SubComments")
@@ -422,9 +493,7 @@ namespace InTheWoods.Migrations
 
                     b.HasOne("InTheWoods.Models.User", "User")
                         .WithMany("SubComments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Admin");
 

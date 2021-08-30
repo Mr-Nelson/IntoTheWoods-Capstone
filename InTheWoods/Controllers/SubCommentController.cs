@@ -20,15 +20,18 @@ namespace InTheWoods.Controllers
         {
             _context = context;
         }
-        [HttpPut, Authorize]
-        public IActionResult Put([FromBody] SubComment value)
+        [HttpPost, Authorize]
+        public IActionResult Post([FromBody] SubComment value)
         {
             //try
             //{
             var userId = User.FindFirstValue("id");
             value.UserId = userId;
+            //if (value.Id == _context.SubComments.Where());
+            //    value.Id += 1;
             try
             {
+                
                 _context.SubComments.Add(value);
                 _context.SaveChanges();
                 return StatusCode(201, value);
@@ -58,7 +61,7 @@ namespace InTheWoods.Controllers
         public IActionResult GetSubCommentById(int subCommentId)
         {
             var subComments = _context.SubComments.Where(c => c.Id == subCommentId).Include(c => c.User).Include(c => c.Comment).
-                 Select(c => new { subCommentId = c.Id, userSubComment = c.UserSubComment, userName = c.User.UserName });
+                 Select(c => new { subCommentId = c.Id, userSubComment = c.UserSubComment, userName = c.User.UserName, userComment = c.Comment.UserComment });
             if (subComments == null)
             {
                 return NotFound();
@@ -68,7 +71,7 @@ namespace InTheWoods.Controllers
         [HttpGet]
         public IActionResult GetAllSubComments()
         {
-            var subComments = _context.SubComments;
+            var subComments = _context.SubComments.Include(c => c.Comment).Select(c => new { subCommentId = c.Id, userSubComment = c.UserSubComment, userName = c.User.UserName, userComment = c.Comment.UserComment});
             return Ok(subComments);
         }
     }

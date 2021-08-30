@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace InTheWoods.Controllers
 {
-    [Route("api/event")]
+    [Route("api/department")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class DepartmentController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public EventController(ApplicationDbContext context)
+        public DepartmentController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpPost, Authorize]
-        public IActionResult Post([FromBody] Event value)
+        public IActionResult Post([FromBody] Department value)
         {
             //try
             //{
@@ -30,7 +30,7 @@ namespace InTheWoods.Controllers
             value.UserId = userId;
             try
             {
-                _context.Events.Add(value);
+                _context.Departments.Add(value);
                 _context.SaveChanges();
                 return StatusCode(201, value);
             }
@@ -57,7 +57,7 @@ namespace InTheWoods.Controllers
         }
 
         [HttpPut, Authorize]
-        public IActionResult Put([FromBody] Event value)
+        public IActionResult Put([FromBody] Department value)
         {
             //try
             //{
@@ -65,7 +65,7 @@ namespace InTheWoods.Controllers
             value.UserId = userId;
             try
             {
-                _context.Events.Add(value);
+                _context.Departments.Add(value);
                 _context.SaveChanges();
                 return StatusCode(201, value);
             }
@@ -92,25 +92,25 @@ namespace InTheWoods.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllEvents()
+        public IActionResult GetAllDepartments()
         {
-            var events = _context.Events;
-            if (events == null)
+            var departments = _context.Departments;
+            if (departments == null)
             {
                 return NotFound();
             }
-            return Ok(events);
+            return Ok(departments);
         }
 
-        [HttpGet("{eventId}")]
-        public IActionResult GetEventById(int EventId)
+        [HttpGet("{departmentId}")]
+        public IActionResult GetDepartmentById(int DepartmentId)
         {
-            var events = _context.Events.Where(e => e.EventId == EventId);
-            if (events == null)
+            var departments = _context.Departments.Where(e => e.DepartmentId == DepartmentId);
+            if (departments == null)
             {
                 return NotFound();
             }
-            return Ok(events);
+            return Ok(departments);
         }
     }
 }

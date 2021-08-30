@@ -9,12 +9,11 @@ namespace InTheWoods.Models
 {
     public class SubComment
     {
-        [Key, Column(Order = 1)]
+        [Key]
         public int Id { get; set; }
 
-        [Key, Column(Order = 2)]
         [ForeignKey("Comment")]
-        public int CommentId { get; set; }
+        public int CommentId { get ; set; }
         public Comment Comment { get; set; }
 
         [ForeignKey("User")]
@@ -25,7 +24,7 @@ namespace InTheWoods.Models
         public string AdminId { get; set; }
         public Admin Admin { get; set; }
 
-
         public string UserSubComment { get; set; }
+
     }
 }

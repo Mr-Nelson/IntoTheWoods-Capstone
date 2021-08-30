@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InTheWoods.Migrations
 {
@@ -9,30 +10,30 @@ namespace InTheWoods.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "09807546-1686-4ff0-a3d5-0bc20b353a2b");
+                keyValue: "9fa228f5-4075-4aab-aec9-a9c35e2ceeb5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ebdec5ba-3bfb-4702-9e91-33923dcb4695");
+                keyValue: "c73daaf4-bd12-414b-9038-b72b765eab66");
 
             migrationBuilder.AlterColumn<string>(
                 name: "EventDate",
                 table: "Events",
                 type: "nvarchar(max)",
                 nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
+                oldClrType: typeof(DateTimeOffset),
+                oldType: "datetimeoffset");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "991b6d07-1e99-4d57-ac9d-270b133587bb", "6aabfd75-0fe7-4690-8ba7-5fa6449eec52", "User", "USER" });
+                values: new object[] { "70df029a-1ee1-4263-8986-a0dc09f07f3e", "089d4553-34ad-4331-b2f4-15e434f85464", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "625da321-1bd2-4761-a0bb-ca0ae01f6dc3", "2e1da7a0-a9e8-41bc-9def-5a23b131dc61", "Admin", "ADMIN" });
+                values: new object[] { "69917067-a2b9-487b-9967-a828d07ab2eb", "93f8cb86-e052-4a84-93ff-f3c5907d9c04", "Admin", "ADMIN" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -40,19 +41,19 @@ namespace InTheWoods.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "625da321-1bd2-4761-a0bb-ca0ae01f6dc3");
+                keyValue: "69917067-a2b9-487b-9967-a828d07ab2eb");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "991b6d07-1e99-4d57-ac9d-270b133587bb");
+                keyValue: "70df029a-1ee1-4263-8986-a0dc09f07f3e");
 
-            migrationBuilder.AlterColumn<int>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "EventDate",
                 table: "Events",
-                type: "int",
+                type: "datetimeoffset",
                 nullable: false,
-                defaultValue: 0,
+                defaultValue: new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
                 oldNullable: true);
@@ -60,12 +61,12 @@ namespace InTheWoods.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ebdec5ba-3bfb-4702-9e91-33923dcb4695", "a207586f-a94f-4d90-9921-59517b58ad63", "User", "USER" });
+                values: new object[] { "c73daaf4-bd12-414b-9038-b72b765eab66", "a82cfffd-ee23-411c-aa58-bb89712b5320", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "09807546-1686-4ff0-a3d5-0bc20b353a2b", "ca9dc084-7a37-4e3a-8a16-4c5ed2668435", "Admin", "ADMIN" });
+                values: new object[] { "9fa228f5-4075-4aab-aec9-a9c35e2ceeb5", "21a53bf2-5c14-437a-a054-46891551a9e1", "Admin", "ADMIN" });
         }
     }
 }

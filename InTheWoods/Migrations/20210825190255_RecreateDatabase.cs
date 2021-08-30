@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InTheWoods.Migrations
 {
-    public partial class CreateDatabaseTables : Migration
+    public partial class RecreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -217,7 +217,7 @@ namespace InTheWoods.Migrations
                     EventId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    EventDate = table.Column<int>(type: "int", nullable: false),
+                    EventDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -238,25 +238,25 @@ namespace InTheWoods.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     CommentId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AdminId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserSubComment = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubComments", x => new { x.Id, x.CommentId, x.UserId, x.AdminId });
+                    table.PrimaryKey("PK_SubComments", x => new { x.Id, x.CommentId });
                     table.ForeignKey(
                         name: "FK_SubComments_Admin_AdminId",
                         column: x => x.AdminId,
                         principalTable: "Admin",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SubComments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SubComments_Comments_CommentId",
                         column: x => x.CommentId,
@@ -268,12 +268,12 @@ namespace InTheWoods.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ebdec5ba-3bfb-4702-9e91-33923dcb4695", "a207586f-a94f-4d90-9921-59517b58ad63", "User", "USER" });
+                values: new object[] { "c73daaf4-bd12-414b-9038-b72b765eab66", "a82cfffd-ee23-411c-aa58-bb89712b5320", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "09807546-1686-4ff0-a3d5-0bc20b353a2b", "ca9dc084-7a37-4e3a-8a16-4c5ed2668435", "Admin", "ADMIN" });
+                values: new object[] { "9fa228f5-4075-4aab-aec9-a9c35e2ceeb5", "21a53bf2-5c14-437a-a054-46891551a9e1", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
