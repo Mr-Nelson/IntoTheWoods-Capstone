@@ -24,9 +24,5 @@ namespace InTheWoods.Models
 
         public ICollection<SubComment> SubComments { get; set; }
 
-        internal static object FindFirstValue(string Id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
