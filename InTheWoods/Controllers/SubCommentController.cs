@@ -57,21 +57,15 @@ namespace InTheWoods.Controllers
             //}
             //}
         }
-        [HttpGet("{subcommentId}")]
-        public IActionResult GetSubCommentById(string subCommentId)
+
+        [HttpGet("{commentId}")]
+        public IActionResult GetAllSubComments(string commentId)
         {
-            var subComments = _context.SubComments.Where(c => c.Id == subCommentId).Include(c => c.User).Include(c => c.Comment).
-                 Select(c => new { subCommentId = c.Id, userSubComment = c.UserSubComment, userName = c.User.UserName, userComment = c.Comment.UserComment });
+            var subComments = _context.SubComments.Where(c => c.CommentId == commentId).Include(c => c.Comment).Select(c => new { subCommentId = c.Id, userSubComment = c.UserSubComment, userName = c.User.UserName, userComment = c.Comment.UserComment});
             if (subComments == null)
             {
                 return NotFound();
             }
-            return Ok(subComments);
-        }
-        [HttpGet]
-        public IActionResult GetAllSubComments()
-        {
-            var subComments = _context.SubComments.Include(c => c.Comment).Select(c => new { subCommentId = c.Id, userSubComment = c.UserSubComment, userName = c.User.UserName, userComment = c.Comment.UserComment});
             return Ok(subComments);
         }
     }
