@@ -10,7 +10,7 @@ namespace InTheWoods.Models
     public class Department
     {
         [Key]
-        public int DepartmentId { get; set; }
+        public string DepartmentId { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
         public User User { get; set; }

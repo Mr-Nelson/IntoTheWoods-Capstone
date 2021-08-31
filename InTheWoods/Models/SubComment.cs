@@ -10,10 +10,10 @@ namespace InTheWoods.Models
     public class SubComment
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [ForeignKey("Comment")]
-        public int CommentId { get ; set; }
+        public string CommentId { get ; set; }
         public Comment Comment { get; set; }
 
         [ForeignKey("User")]

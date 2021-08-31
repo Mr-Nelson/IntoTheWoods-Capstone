@@ -10,7 +10,7 @@ namespace InTheWoods.Models
     public class Event
     {
         [Key]
-        public int EventId { get; set; }
+        public string EventId { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
         public User User { get; set; }

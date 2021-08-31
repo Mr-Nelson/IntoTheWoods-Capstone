@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InTheWoods.Migrations
 {
-    public partial class RecreateDatabase : Migration
+    public partial class RebuildDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -187,8 +187,7 @@ namespace InTheWoods.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserComment = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -211,13 +210,55 @@ namespace InTheWoods.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Departments",
+                columns: table => new
+                {
+                    DepartmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Company = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Hours = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ManagerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.DepartmentId);
+                    table.ForeignKey(
+                        name: "FK_Departments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Documents",
+                columns: table => new
+                {
+                    DocumentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DocumentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DocumentDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Documents", x => x.DocumentId);
+                    table.ForeignKey(
+                        name: "FK_Documents_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EventId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    EventDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EventDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -236,15 +277,15 @@ namespace InTheWoods.Migrations
                 name: "SubComments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    CommentId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CommentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserSubComment = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubComments", x => new { x.Id, x.CommentId });
+                    table.PrimaryKey("PK_SubComments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SubComments_Admin_AdminId",
                         column: x => x.AdminId,
@@ -262,18 +303,18 @@ namespace InTheWoods.Migrations
                         column: x => x.CommentId,
                         principalTable: "Comments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c73daaf4-bd12-414b-9038-b72b765eab66", "a82cfffd-ee23-411c-aa58-bb89712b5320", "User", "USER" });
+                values: new object[] { "797e1828-fe78-4bc0-a3c3-6b7aada0034e", "d061dfb8-9749-42d4-b40e-61ade204f1a0", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9fa228f5-4075-4aab-aec9-a9c35e2ceeb5", "21a53bf2-5c14-437a-a054-46891551a9e1", "Admin", "ADMIN" });
+                values: new object[] { "c2d3ddd3-8605-42e1-a4b1-2cd0222dcef1", "77b1b103-ff4c-4007-aac0-c98cd4761b08", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -325,6 +366,16 @@ namespace InTheWoods.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Departments_UserId",
+                table: "Departments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Documents_UserId",
+                table: "Documents",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Events_UserId",
                 table: "Events",
                 column: "UserId");
@@ -361,6 +412,12 @@ namespace InTheWoods.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
+
+            migrationBuilder.DropTable(
+                name: "Documents");
 
             migrationBuilder.DropTable(
                 name: "Events");

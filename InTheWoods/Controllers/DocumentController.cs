@@ -103,7 +103,7 @@ namespace InTheWoods.Controllers
         }
 
         [HttpGet("{documentId}")]
-        public IActionResult GetDocumentById(int DocumentId)
+        public IActionResult GetDocumentById(string DocumentId)
         {
             var documents = _context.Documents.Where(e => e.DocumentId == DocumentId);
             if (documents == null)

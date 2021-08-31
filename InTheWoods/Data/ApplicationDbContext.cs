@@ -30,18 +30,24 @@ namespace InTheWoods.Data
             {
                 base.OnModelCreating(modelBuilder);
 
-                modelBuilder.Entity<Comment>();
+                modelBuilder.Entity<Comment>()
+                .HasKey(b => new { b.Id });
+                modelBuilder.Entity<Comment>()
+                .Property(b => b.Id)
+                .ValueGeneratedOnAdd();
 
                 modelBuilder.Entity<Event>();
 
                 modelBuilder.Entity<Document>();
 
+                modelBuilder.Entity<Department>();
+
                 modelBuilder.Entity<SubComment>()
-                    .HasKey(bc => new { bc.Id, bc.CommentId });
+                 .HasKey(b => new { b.Id });
                 modelBuilder.Entity<SubComment>()
-                    .HasOne(bc => bc.Comment)
-                    .WithMany(b => b.SubComments)
-                    .HasForeignKey(bc => bc.CommentId);
+                .Property(b => b.Id)
+                .ValueGeneratedOnAdd();
+
             }
         }
     }

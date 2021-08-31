@@ -103,7 +103,7 @@ namespace InTheWoods.Controllers
         }
 
         [HttpGet("{departmentId}")]
-        public IActionResult GetDepartmentById(int DepartmentId)
+        public IActionResult GetDepartmentById(string DepartmentId)
         {
             var departments = _context.Departments.Where(e => e.DepartmentId == DepartmentId);
             if (departments == null)

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InTheWoods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210825190255_RecreateDatabase")]
-    partial class RecreateDatabase
+    [Migration("20210831194234_ReguildTables")]
+    partial class ReguildTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,10 +84,9 @@ namespace InTheWoods.Migrations
 
             modelBuilder.Entity("InTheWoods.Models.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AdminId")
                         .HasColumnType("nvarchar(450)");
@@ -107,15 +106,64 @@ namespace InTheWoods.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("InTheWoods.Models.Department", b =>
+                {
+                    b.Property<string>("DepartmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hours")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManagerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DepartmentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("InTheWoods.Models.Document", b =>
+                {
+                    b.Property<string>("DocumentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DocumentDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DocumentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Documents");
+                });
+
             modelBuilder.Entity("InTheWoods.Models.Event", b =>
                 {
-                    b.Property<int>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("EventId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTimeOffset>("EventDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<string>("EventDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventLocation")
                         .HasColumnType("nvarchar(max)");
@@ -135,13 +183,13 @@ namespace InTheWoods.Migrations
 
             modelBuilder.Entity("InTheWoods.Models.SubComment", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
@@ -150,7 +198,7 @@ namespace InTheWoods.Migrations
                     b.Property<string>("UserSubComment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id", "CommentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AdminId");
 
@@ -264,15 +312,15 @@ namespace InTheWoods.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c73daaf4-bd12-414b-9038-b72b765eab66",
-                            ConcurrencyStamp = "a82cfffd-ee23-411c-aa58-bb89712b5320",
+                            Id = "26e1607a-ee96-4c33-bde9-7f71d903e110",
+                            ConcurrencyStamp = "aaba0040-ca1f-4f68-a281-811bf992d072",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "9fa228f5-4075-4aab-aec9-a9c35e2ceeb5",
-                            ConcurrencyStamp = "21a53bf2-5c14-437a-a054-46891551a9e1",
+                            Id = "2e607485-fcd1-4051-acf8-54b6fcbbefa8",
+                            ConcurrencyStamp = "171565f2-edd8-4ea3-aa8a-e6976be3bbdb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -397,6 +445,24 @@ namespace InTheWoods.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("InTheWoods.Models.Department", b =>
+                {
+                    b.HasOne("InTheWoods.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("InTheWoods.Models.Document", b =>
+                {
+                    b.HasOne("InTheWoods.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("InTheWoods.Models.Event", b =>
                 {
                     b.HasOne("InTheWoods.Models.User", "User")
@@ -414,9 +480,7 @@ namespace InTheWoods.Migrations
 
                     b.HasOne("InTheWoods.Models.Comment", "Comment")
                         .WithMany("SubComments")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CommentId");
 
                     b.HasOne("InTheWoods.Models.User", "User")
                         .WithMany("SubComments")

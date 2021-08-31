@@ -27,6 +27,8 @@ namespace InTheWoods.Controllers
             //{
             var userId = User.FindFirstValue("id");
             value.UserId = userId;
+
+            
             try
             {
                 _context.Comments.Add(value);
@@ -55,7 +57,7 @@ namespace InTheWoods.Controllers
             //}
         }
         [HttpGet("{commentId}")]
-        public IActionResult GetCommentById(int commentId)
+        public IActionResult GetCommentById(string commentId)
         {
             var comments = _context.Comments.Where(c => c.Id == commentId).Include(c => c.User).
                  Select(c => new { commentId = c.Id, userId = c.UserId, userComment = c.UserComment, userName = c.User.UserName});

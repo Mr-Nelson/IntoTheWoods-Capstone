@@ -27,8 +27,8 @@ namespace InTheWoods.Controllers
             //{
             var userId = User.FindFirstValue("id");
             value.UserId = userId;
-            //if (value.Id == _context.SubComments.Where());
-            //    value.Id += 1;
+            var commentId = _context.Comments.Where(c => c.Id == value.CommentId).Select(c => c.Id ).Single();
+            value.CommentId =commentId;
             try
             {
                 
@@ -58,7 +58,7 @@ namespace InTheWoods.Controllers
             //}
         }
         [HttpGet("{subcommentId}")]
-        public IActionResult GetSubCommentById(int subCommentId)
+        public IActionResult GetSubCommentById(string subCommentId)
         {
             var subComments = _context.SubComments.Where(c => c.Id == subCommentId).Include(c => c.User).Include(c => c.Comment).
                  Select(c => new { subCommentId = c.Id, userSubComment = c.UserSubComment, userName = c.User.UserName, userComment = c.Comment.UserComment });

@@ -5,11 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace InTheWoods.Models
 {
     public class Comment
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [ForeignKey("User")]
         public string UserId { get; set; }
@@ -20,6 +21,12 @@ namespace InTheWoods.Models
         public Admin Admin { get; set; }
 
         public string UserComment { get; set; }
+
         public ICollection<SubComment> SubComments { get; set; }
+
+        internal static object FindFirstValue(string Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

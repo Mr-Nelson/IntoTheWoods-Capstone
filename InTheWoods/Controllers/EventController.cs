@@ -103,7 +103,7 @@ namespace InTheWoods.Controllers
         }
 
         [HttpGet("{eventId}")]
-        public IActionResult GetEventById(int EventId)
+        public IActionResult GetEventById(string EventId)
         {
             var events = _context.Events.Where(e => e.EventId == EventId);
             if (events == null)

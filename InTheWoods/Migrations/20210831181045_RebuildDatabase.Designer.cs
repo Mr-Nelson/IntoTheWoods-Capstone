@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InTheWoods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210831140111_BuildDatabase")]
-    partial class BuildDatabase
+    [Migration("20210831181045_RebuildDatabase")]
+    partial class RebuildDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,10 +84,8 @@ namespace InTheWoods.Migrations
 
             modelBuilder.Entity("InTheWoods.Models.Comment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AdminId")
                         .HasColumnType("nvarchar(450)");
@@ -109,10 +107,8 @@ namespace InTheWoods.Migrations
 
             modelBuilder.Entity("InTheWoods.Models.Department", b =>
                 {
-                    b.Property<int>("DepartmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("DepartmentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -141,10 +137,8 @@ namespace InTheWoods.Migrations
 
             modelBuilder.Entity("InTheWoods.Models.Document", b =>
                 {
-                    b.Property<int>("DocumentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("DocumentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DocumentDescription")
                         .HasColumnType("nvarchar(max)");
@@ -164,10 +158,8 @@ namespace InTheWoods.Migrations
 
             modelBuilder.Entity("InTheWoods.Models.Event", b =>
                 {
-                    b.Property<int>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("EventId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("EventDate")
                         .HasColumnType("nvarchar(max)");
@@ -190,13 +182,13 @@ namespace InTheWoods.Migrations
 
             modelBuilder.Entity("InTheWoods.Models.SubComment", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
@@ -205,7 +197,7 @@ namespace InTheWoods.Migrations
                     b.Property<string>("UserSubComment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id", "CommentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AdminId");
 
@@ -319,15 +311,15 @@ namespace InTheWoods.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "91c97575-c7d4-485c-b4e4-f894cc359189",
-                            ConcurrencyStamp = "f353d1c4-0577-46b8-88cc-88c301fe5433",
+                            Id = "797e1828-fe78-4bc0-a3c3-6b7aada0034e",
+                            ConcurrencyStamp = "d061dfb8-9749-42d4-b40e-61ade204f1a0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "0eb054d4-303d-4d31-af41-e06376a54472",
-                            ConcurrencyStamp = "c693d3e8-38b3-448b-923b-093b9fcea45a",
+                            Id = "c2d3ddd3-8605-42e1-a4b1-2cd0222dcef1",
+                            ConcurrencyStamp = "77b1b103-ff4c-4007-aac0-c98cd4761b08",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -487,9 +479,7 @@ namespace InTheWoods.Migrations
 
                     b.HasOne("InTheWoods.Models.Comment", "Comment")
                         .WithMany("SubComments")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CommentId");
 
                     b.HasOne("InTheWoods.Models.User", "User")
                         .WithMany("SubComments")
