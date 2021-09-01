@@ -36,11 +36,23 @@ namespace InTheWoods.Data
                 .Property(b => b.Id)
                 .ValueGeneratedOnAdd();
 
-                modelBuilder.Entity<Event>();
+                modelBuilder.Entity<Event>()
+                .HasKey(b => new { b.EventId });
+                modelBuilder.Entity<Event>()
+                .Property(b => b.EventId)
+                .ValueGeneratedOnAdd();
 
-                modelBuilder.Entity<Document>();
+                modelBuilder.Entity<Document>()
+                .HasKey(b => new { b.DocumentId });
+                modelBuilder.Entity<Document>()
+                .Property(b => b.DocumentId)
+                .ValueGeneratedOnAdd();
 
-                modelBuilder.Entity<Department>();
+                modelBuilder.Entity<Department>()
+                .HasKey(b => new { b.DepartmentId });
+                modelBuilder.Entity<Department>()
+                .Property(b => b.DepartmentId)
+                .ValueGeneratedOnAdd();
 
                 modelBuilder.Entity<SubComment>()
                  .HasKey(b => new { b.Id });
