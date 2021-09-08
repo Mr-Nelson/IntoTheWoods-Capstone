@@ -17,8 +17,8 @@ namespace InTheWoods.Models
         public string EventDate { get; set; }
         public string EventName { get; set; }
         public string Address { get; set; }
-        public string Lat { get; set; }
-        public string Long { get; set; }
+        public Int32 Lat { get; set; }
+        public Int32 Long { get; set; }
 
     }
 }
