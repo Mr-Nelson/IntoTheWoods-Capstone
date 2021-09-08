@@ -4,14 +4,16 @@ using InTheWoods.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InTheWoods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210908122533_EventLatLongToString")]
+    partial class EventLatLongToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,11 +174,11 @@ namespace InTheWoods.Migrations
                     b.Property<string>("EventName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Lat")
-                        .HasColumnType("float");
+                    b.Property<string>("Lat")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Long")
-                        .HasColumnType("float");
+                    b.Property<string>("Long")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -320,15 +322,15 @@ namespace InTheWoods.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "81c13936-2bfb-40da-8c74-a8aa737336f0",
-                            ConcurrencyStamp = "9c37acb0-40f0-44b9-9cef-e313c1f1050c",
+                            Id = "9210e040-c7ad-45a1-a76c-be395df62384",
+                            ConcurrencyStamp = "498a20d4-a33c-44b1-b341-c2d3d24c8e70",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ef6ae4fb-4a7b-482c-881f-f3062899acde",
-                            ConcurrencyStamp = "b47aacd7-98db-457e-91f0-3eb3dde44562",
+                            Id = "d8aba584-1cae-4b89-8df9-44f14fa0653a",
+                            ConcurrencyStamp = "e249dc5a-a907-4bb7-a464-a1b3d4c8943b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
