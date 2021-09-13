@@ -61,6 +61,7 @@ namespace InTheWoods.Controllers
         {
             var comments = _context.Comments.Where(c => c.Id == commentId).Include(c => c.User).
                  Select(c => new { commentId = c.Id, userId = c.UserId, userComment = c.UserComment, userName = c.User.UserName});
+
             if (comments == null)
             {
                 return NotFound();
@@ -70,7 +71,9 @@ namespace InTheWoods.Controllers
         [HttpGet]
         public IActionResult GetAllComments()
         {
-            var comments = _context.Comments;
+            var comments = _context.Comments.ToList();
+           
+ 
             return Ok(comments);
         }
     }
